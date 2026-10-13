@@ -10,23 +10,53 @@
  */
 class Solution {
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
-        ListNode dummy = new ListNode(-1);
-        ListNode current = dummy;
-
-        while (list1 != null && list2 != null) {
-            if (list1.val <= list2.val) {
-                current.next = list1;
-                list1 = list1.next;
-            } else {
-                current.next = list2;
-                list2 = list2.next;
-            }
-            current = current.next;
+       ListNode i=list1 , j=list2;
+       ListNode list3= new ListNode();
+       if(i==null && j==null) return null;
+       else if(i==null && j!=null){
+        return j;
+       }
+       else if(j==null && i!=null){
+        return i;
+       }
+       else if(i!=null && j!=null && i.val<j.val ){
+        list3.val=i.val;
+        i=i.next;
+       }
+       else{
+        list3.val=j.val;
+        j=j.next;
+       }
+       ListNode temp=list3;
+       while(i!=null && j!=null){
+        ListNode newnode = new ListNode();
+        if(i.val<j.val){
+            newnode.val=i.val;
+            temp.next=newnode;
+            temp=temp.next;
+            i=i.next;
         }
-
-        // Attach whichever list still has remaining nodes
-        current.next = (list1 != null) ? list1 : list2;
-
-        return dummy.next;
+        else{
+            newnode.val=j.val;
+            temp.next=newnode;
+            temp=temp.next;
+            j=j.next;
+        }
+       }
+       while(i!=null){
+        ListNode newnode = new ListNode();
+        newnode.val=i.val;
+        temp.next=newnode;
+        temp=temp.next;
+        i=i.next;
+       }
+       while(j!=null){
+        ListNode newnode =new ListNode();
+        newnode.val=j.val;
+        temp.next=newnode;
+        temp=temp.next;
+        j=j.next;
+       }
+       return list3;
     }
 }
